@@ -65,6 +65,7 @@
     <Compile Include="Components\ClosestPoint.cs" />
     <Compile Include="Components\MaskCreate.cs" />
     <Compile Include="Components\MaskParam.cs" />
+    <Compile Include="Components\GetValueAtPt.cs" />
     <Compile Include="Components\ReadFile.cs" />
     <Compile Include="Components\SettingsParam.cs" />
     <Compile Include="Components\VolumeBlend.cs" />

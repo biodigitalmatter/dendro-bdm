@@ -50,6 +50,7 @@ public:
 	int * GetMeshFaces();
 	int GetVertexCount();
 	int GetFaceCount();
+    float GetValueAtCoord(double x, double y, double z);
 
 private:
 	openvdb::FloatGrid::Ptr mGrid;

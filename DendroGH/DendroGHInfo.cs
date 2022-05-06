@@ -59,7 +59,7 @@ namespace DendroGH
             get
             {
                 //Return a string representing the version.
-                return "0.9.0.0";
+                return "0.9.1-alpha";
             }
         }
         public override string AssemblyVersion

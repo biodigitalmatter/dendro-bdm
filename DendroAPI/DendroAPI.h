@@ -52,6 +52,7 @@ extern "C" {
 
 	// utilities and analysis
 	extern DENDRO_API float* DendroClosestPoint(DendroGrid* grid, float* vPoints, int vCount, int* rSize);
+	extern DENDRO_API double DendroGetValueAtCoord(DendroGrid* grid, double x, double y, double z);
 
 #ifdef __cplusplus
 }

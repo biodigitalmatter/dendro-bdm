@@ -40,7 +40,7 @@ bool DendroGrid::Read(const char * vFile)
 
 	file.open();
 
-	openvdb::io::File::NameIterator nameIter = file.beginName();
+    const openvdb::io::File::NameIterator nameIter = file.beginName();
 	if (nameIter == file.endName()) {
 		return false;
 	}
@@ -71,10 +71,10 @@ bool DendroGrid::CreateFromMesh(DendroMesh vMesh, double voxelSize, double bandw
 	openvdb::math::Transform xform;
 	xform.preScale(voxelSize);
 
-	auto vertices = vMesh.Vertices();
-	auto faces = vMesh.Faces();
+    const auto vertices = vMesh.Vertices();
+    const auto faces = vMesh.Faces();
 
-	openvdb::tools::QuadAndTriangleDataAdapter<openvdb::Vec3s, openvdb::Vec4I> mesh(vertices, faces);
+    const openvdb::tools::QuadAndTriangleDataAdapter<openvdb::Vec3s, openvdb::Vec4I> mesh(vertices, faces);
 	mGrid = openvdb::tools::meshToVolume<openvdb::FloatGrid>(mesh, xform, static_cast<float>(bandwidth), static_cast<float>(bandwidth), 0, NULL);
 
 	mDisplay = vMesh;
@@ -91,7 +91,7 @@ bool DendroGrid::CreateFromPoints(DendroParticle vPoints, double voxelSize, doub
 	mGrid = openvdb::createLevelSet<openvdb::FloatGrid>(voxelSize, bandwidth);
 	openvdb::tools::ParticlesToLevelSet<openvdb::FloatGrid> raster(*mGrid);
 
-	openvdb::math::Transform::Ptr xform = openvdb::math::Transform::createLinearTransform(voxelSize);
+    const openvdb::math::Transform::Ptr xform = openvdb::math::Transform::createLinearTransform(voxelSize);
 	mGrid->setTransform(xform);
 
 	raster.setGrainSize(1);
@@ -108,7 +108,7 @@ void DendroGrid::Transform(openvdb::math::Mat4d xform)
 
 void DendroGrid::BooleanUnion(DendroGrid vAdd)
 {
-	auto csgGrid = vAdd.Grid();
+    const auto csgGrid = vAdd.Grid();
 
 	// store current tranforms of both csg volumes
 	const openvdb::math::Transform
@@ -116,16 +116,16 @@ void DendroGrid::BooleanUnion(DendroGrid vAdd)
 		&targetXform = mGrid->transform();
 
 	// create a copy of the source grid for resampling
-	openvdb::FloatGrid::Ptr cGrid = openvdb::createLevelSet<openvdb::FloatGrid>(mGrid->voxelSize()[0]);
+    const openvdb::FloatGrid::Ptr cGrid = openvdb::createLevelSet<openvdb::FloatGrid>(mGrid->voxelSize()[0]);
 	cGrid->transform() = mGrid->transform();
 
 	// compute a source grid to target grid transform
-	openvdb::Mat4R xform =
+    const openvdb::Mat4R xform =
 		sourceXform.baseMap()->getAffineMap()->getMat4() *
 		targetXform.baseMap()->getAffineMap()->getMat4().inverse();
 
 	// create the transformer
-	openvdb::tools::GridTransformer transformer(xform);
+    const openvdb::tools::GridTransformer transformer(xform);
 
 	// resample using trilinear interpolation 
 	transformer.transformGrid<openvdb::tools::BoxSampler, openvdb::FloatGrid>(*csgGrid, *cGrid);
@@ -136,7 +136,7 @@ void DendroGrid::BooleanUnion(DendroGrid vAdd)
 
 void DendroGrid::BooleanIntersection(DendroGrid vIntersect)
 {
-	auto csgGrid = vIntersect.Grid();
+    const auto csgGrid = vIntersect.Grid();
 
 	// store current tranforms of both csg volumes
 	const openvdb::math::Transform
@@ -144,16 +144,16 @@ void DendroGrid::BooleanIntersection(DendroGrid vIntersect)
 		&targetXform = mGrid->transform();
 
 	// create a copy of the source grid for resampling
-	openvdb::FloatGrid::Ptr cGrid = openvdb::createLevelSet<openvdb::FloatGrid>(mGrid->voxelSize()[0]);
+    const openvdb::FloatGrid::Ptr cGrid = openvdb::createLevelSet<openvdb::FloatGrid>(mGrid->voxelSize()[0]);
 	cGrid->transform() = mGrid->transform();
 
 	// compute a source grid to target grid transform
-	openvdb::Mat4R xform =
+    const openvdb::Mat4R xform =
 		sourceXform.baseMap()->getAffineMap()->getMat4() *
 		targetXform.baseMap()->getAffineMap()->getMat4().inverse();
 
 	// create the transformer
-	openvdb::tools::GridTransformer transformer(xform);
+    const openvdb::tools::GridTransformer transformer(xform);
 
 	// resample using trilinear interpolation 
 	transformer.transformGrid<openvdb::tools::BoxSampler, openvdb::FloatGrid>(*csgGrid, *cGrid);
@@ -164,7 +164,7 @@ void DendroGrid::BooleanIntersection(DendroGrid vIntersect)
 
 void DendroGrid::BooleanDifference(DendroGrid vSubtract)
 {
-	auto csgGrid = vSubtract.Grid();
+    const auto csgGrid = vSubtract.Grid();
 
 	// store current tranforms of both csg volumes
 	const openvdb::math::Transform
@@ -172,16 +172,16 @@ void DendroGrid::BooleanDifference(DendroGrid vSubtract)
 		&targetXform = mGrid->transform();
 
 	// create a copy of the source grid for resampling
-	openvdb::FloatGrid::Ptr cGrid = openvdb::createLevelSet<openvdb::FloatGrid>(mGrid->voxelSize()[0]);
+    const openvdb::FloatGrid::Ptr cGrid = openvdb::createLevelSet<openvdb::FloatGrid>(mGrid->voxelSize()[0]);
 	cGrid->transform() = mGrid->transform();
 
 	// compute a source grid to target grid transform
-	openvdb::Mat4R xform =
+    const openvdb::Mat4R xform =
 		sourceXform.baseMap()->getAffineMap()->getMat4() *
 		targetXform.baseMap()->getAffineMap()->getMat4().inverse();
 
 	// create the transformer
-	openvdb::tools::GridTransformer transformer(xform);
+    const openvdb::tools::GridTransformer transformer(xform);
 
 	// resample using trilinear interpolation 
 	transformer.transformGrid<openvdb::tools::BoxSampler, openvdb::FloatGrid>(*csgGrid, *cGrid);
@@ -213,7 +213,7 @@ void DendroGrid::Offset(double amount, DendroGrid vMask, double min, double max,
 	filter.setGrainSize(1);
 
 	// create filter mask
-	openvdb::Grid<openvdb::FloatTree> mMask(*vMask.Grid());
+    const openvdb::Grid<openvdb::FloatTree> mMask(*vMask.Grid());
 
 	amount = amount * -1;
 
@@ -261,7 +261,7 @@ void DendroGrid::Smooth(int type, int iterations, int width, DendroGrid vMask, d
 	filter.setGrainSize(1);
 
 	// create filter mask
-	openvdb::Grid<openvdb::FloatTree> mMask(*vMask.Grid());
+    const openvdb::Grid<openvdb::FloatTree> mMask(*vMask.Grid());
 
 	// apply filter for the number iterations supplied
 	for (int i = 0; i < iterations; i++) {
@@ -296,7 +296,7 @@ void DendroGrid::Blend(DendroGrid bGrid, double bPosition, double bEnd)
 	morph.setTrackerTemporalScheme(openvdb::math::TVD_RK2);
 	morph.setGrainSize(1);
 
-	double bStart = bPosition * bEnd;
+    const double bStart = bPosition * bEnd;
 	morph.advect(bStart, bEnd);
 }
 
@@ -313,13 +313,13 @@ void DendroGrid::Blend(DendroGrid bGrid, double bPosition, double bEnd, DendroGr
 	morph.setMaskRange((float)mMin, (float)mMax);
 	morph.setGrainSize(1);
 
-	double bStart = bPosition * bEnd;
+    const double bStart = bPosition * bEnd;
 	morph.advect(bStart, bEnd);
 }
 
 void DendroGrid::ClosestPoint(std::vector<openvdb::Vec3R>& points, std::vector<float>& distances)
 {
-	auto csp = openvdb::tools::ClosestSurfacePoint<openvdb::FloatGrid>::create(*mGrid);
+    const auto csp = openvdb::tools::ClosestSurfacePoint<openvdb::FloatGrid>::create(*mGrid);
 	csp->searchAndReplace(points, distances);
 }
 
@@ -339,18 +339,18 @@ void DendroGrid::UpdateDisplay()
 
 	for (Index64 n = 0, i = 0, N = mesher.pointListSize(); n < N; ++n)
 	{
-		auto v = mesher.pointList()[n];
+        const auto v = mesher.pointList()[n];
 		mDisplay.AddVertice(v);
 	}
 
-	openvdb::tools::PolygonPoolList &polygonPoolList = mesher.polygonPoolList();
+    const openvdb::tools::PolygonPoolList &polygonPoolList = mesher.polygonPoolList();
 
 	for (Index64 n = 0, N = mesher.polygonPoolListSize(); n < N; ++n)
 	{
 		const openvdb::tools::PolygonPool &polygons = polygonPoolList[n];
 		for (Index64 i = 0, I = polygons.numQuads(); i < I; ++i)
 		{
-			auto face = polygons.quad(i);
+            const auto face = polygons.quad(i);
 			mDisplay.AddFace(face);
 		}
 	}
@@ -370,16 +370,16 @@ void DendroGrid::UpdateDisplay(double isovalue, double adaptivity)
 
 	mDisplay.AddVertice(points);
 
-	auto begin = triangles.begin();
-	auto end = triangles.end();
+    const auto begin = triangles.begin();
+    const auto end = triangles.end();
 
 	for (auto it = begin; it != end; ++it) {
-		int w = -1;
-		int x = it->x();
-		int y = it->y();
-		int z = it->z();
+        const int w = -1;
+        const int x = it->x();
+        const int y = it->y();
+        const int z = it->z();
 
-		openvdb::Vec4I face(x,y,z,w);
+        const openvdb::Vec4I face(x,y,z,w);
 
 		mDisplay.AddFace(face);
 	}
@@ -434,4 +434,20 @@ int DendroGrid::GetVertexCount()
 int DendroGrid::GetFaceCount()
 {
 	return mFaceCount;
+}
+
+float DendroGrid::GetValueAtCoord(const double x, const double y, const double z)
+{
+	// get grid's transform
+	openvdb::math::Transform xform = mGrid->transform();
+
+	// Get index coord at world coord
+	// TODO: Interpolate value?
+	openvdb::Vec3d xyz = openvdb::Vec3d(x, y, z);
+    openvdb::math::Coord ijk = xform.worldToIndexCellCentered(xyz);
+
+    const openvdb::FloatGrid::Accessor accessor = mGrid->getAccessor();
+
+	return accessor.getValue(ijk);
+
 }

@@ -69,6 +69,9 @@ namespace DendroGH {
         [DllImport("DendroAPI.dll", CallingConvention = CallingConvention.Cdecl)]
         static private extern IntPtr DendroClosestPoint(IntPtr grid, float[] vertices, int vCount, out int rSize);
 
+        [DllImport("DendroAPI.dll", CallingConvention = CallingConvention.Cdecl)]
+        static private extern double DendroGetValueAtCoord(IntPtr grid, double x, double y, double z);
+
         [DllImport ("DendroAPI.dll", CallingConvention = CallingConvention.Cdecl)]
         static private extern void DendroToMesh (IntPtr grid);
 
@@ -814,6 +817,15 @@ namespace DendroGH {
             }
 
             return cPoints;
+        }
+        public double GetValueAtPt(Point3d pt)
+        {
+            double x = pt.X;
+            double y = pt.Y;
+            double z = pt.Z;
+
+            return DendroGetValueAtCoord (this.Grid, x, y, z);
+
         }
         #endregion Methods
 
