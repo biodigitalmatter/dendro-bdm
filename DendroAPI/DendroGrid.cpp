@@ -1,4 +1,4 @@
-#include "stdafx.h"
+#include "pch.h"
 #include "DendroGrid.h"
 
 #include <openvdb/tools/VolumeToMesh.h>
@@ -339,7 +339,7 @@ void DendroGrid::UpdateDisplay()
 
 	for (Index64 n = 0, i = 0, N = mesher.pointListSize(); n < N; ++n)
 	{
-		auto v = mesher.pointList()[n];
+		openvdb::math::Vec3<float> v = mesher.pointList()[n];
 		mDisplay.AddVertice(v);
 	}
 
@@ -350,7 +350,7 @@ void DendroGrid::UpdateDisplay()
 		const openvdb::tools::PolygonPool &polygons = polygonPoolList[n];
 		for (Index64 i = 0, I = polygons.numQuads(); i < I; ++i)
 		{
-			auto face = polygons.quad(i);
+			openvdb::Vec4I face = polygons.quad(i);
 			mDisplay.AddFace(face);
 		}
 	}
@@ -373,7 +373,7 @@ void DendroGrid::UpdateDisplay(double isovalue, double adaptivity)
 	auto begin = triangles.begin();
 	auto end = triangles.end();
 
-	for (auto it = begin; it != end; ++it) {
+	for (std::vector<openvdb::Vec3I>::iterator it = begin; it != end; ++it) {
 		int w = -1;
 		int x = it->x();
 		int y = it->y();

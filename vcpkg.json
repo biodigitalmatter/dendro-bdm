@@ -1,0 +1,9 @@
+{
+  "$schema": "https://raw.githubusercontent.com/microsoft/vcpkg/master/scripts/vcpkg.schema.json",
+  "name": "dendro-bdm",
+  "version": "0.9.0",
+  "dependencies": [
+    "openvdb",
+    "openexr"
+  ]
+}

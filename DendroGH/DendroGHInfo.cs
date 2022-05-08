@@ -54,21 +54,5 @@ namespace DendroGH
                 return "dev@ecrlabs.com";
             }
         }
-        public override string Version
-        {
-            get
-            {
-                //Return a string representing the version.
-                return "0.9.0.0";
-            }
-        }
-        public override string AssemblyVersion
-        {
-            get
-            {
-                //Return a string representing the assembly version. Not sure what's the difference to Version, let's use always the same. 
-                return this.Version;
-            }
-        }
     }
 }
