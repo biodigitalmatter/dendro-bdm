@@ -33,7 +33,7 @@
     </ItemGroup>
     <PropertyGroup Condition="$(Configuration) == 'Debug' AND $([MSBuild]::IsOSPlatform(Windows))">
         <StartProgram>C:\Program Files\Rhino 7\System\Rhino.exe</StartProgram>
-        <StartArguments></StartArguments>
+        <StartArguments>/nosplash /bigdump</StartArguments>
         <StartAction>Program</StartAction>
     </PropertyGroup>
 <!--    <Target Name="PostBuild" AfterTargets="PostBuildEvent">
