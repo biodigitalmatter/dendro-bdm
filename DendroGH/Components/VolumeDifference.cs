@@ -55,7 +55,7 @@ namespace DendroGH {
             get {
                 //You can add image files to your project resources and access them like this:
                 // return Resources.IconForThisComponent;
-                return DendroGH.Properties.Resources.ico_bool_sub;
+                return Resources.ico_bool_sub;
             }
         }
 

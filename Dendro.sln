@@ -1,11 +1,18 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27130.2026
+# Visual Studio Version 17
+VisualStudioVersion = 17.1.32421.90
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DendroGH", "DendroGH\DendroGH.csproj", "{A45EBB63-85ED-4B96-BC3A-21221C1DC605}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DendroGH", "DendroGH\DendroGH.csproj", "{A2D765BC-B21D-46CE-AB0F-952D979DD7D6}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DendroAPI", "DendroAPI\DendroAPI.vcxproj", "{FBDAB1F6-294A-4978-A8EA-5E4479D86E67}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DendroAPI", "DendroAPI\DendroAPI.vcxproj", "{5D5ADC3D-160E-44B1-A1BA-C3625191EA40}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{FD62CB38-8E5A-4D43-9C5B-861A86982E05}"
+	ProjectSection(SolutionItems) = preProject
+		vcpkg.json = vcpkg.json
+		vcpkg\triplets\x64-windows-mixed.cmake = vcpkg\triplets\x64-windows-mixed.cmake
+		vcpkg\triplets\x86-windows-mixed.cmake = vcpkg\triplets\x86-windows-mixed.cmake
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,33 +24,35 @@ Global
 		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{A45EBB63-85ED-4B96-BC3A-21221C1DC605}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A45EBB63-85ED-4B96-BC3A-21221C1DC605}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A45EBB63-85ED-4B96-BC3A-21221C1DC605}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{A45EBB63-85ED-4B96-BC3A-21221C1DC605}.Debug|x64.Build.0 = Debug|Any CPU
-		{A45EBB63-85ED-4B96-BC3A-21221C1DC605}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{A45EBB63-85ED-4B96-BC3A-21221C1DC605}.Debug|x86.Build.0 = Debug|Any CPU
-		{A45EBB63-85ED-4B96-BC3A-21221C1DC605}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A45EBB63-85ED-4B96-BC3A-21221C1DC605}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A45EBB63-85ED-4B96-BC3A-21221C1DC605}.Release|x64.ActiveCfg = Release|Any CPU
-		{A45EBB63-85ED-4B96-BC3A-21221C1DC605}.Release|x64.Build.0 = Release|Any CPU
-		{A45EBB63-85ED-4B96-BC3A-21221C1DC605}.Release|x86.ActiveCfg = Release|Any CPU
-		{A45EBB63-85ED-4B96-BC3A-21221C1DC605}.Release|x86.Build.0 = Release|Any CPU
-		{FBDAB1F6-294A-4978-A8EA-5E4479D86E67}.Debug|Any CPU.ActiveCfg = Debug|Win32
-		{FBDAB1F6-294A-4978-A8EA-5E4479D86E67}.Debug|x64.ActiveCfg = Debug|x64
-		{FBDAB1F6-294A-4978-A8EA-5E4479D86E67}.Debug|x64.Build.0 = Debug|x64
-		{FBDAB1F6-294A-4978-A8EA-5E4479D86E67}.Debug|x86.ActiveCfg = Debug|Win32
-		{FBDAB1F6-294A-4978-A8EA-5E4479D86E67}.Debug|x86.Build.0 = Debug|Win32
-		{FBDAB1F6-294A-4978-A8EA-5E4479D86E67}.Release|Any CPU.ActiveCfg = Release|Win32
-		{FBDAB1F6-294A-4978-A8EA-5E4479D86E67}.Release|x64.ActiveCfg = Release|x64
-		{FBDAB1F6-294A-4978-A8EA-5E4479D86E67}.Release|x64.Build.0 = Release|x64
-		{FBDAB1F6-294A-4978-A8EA-5E4479D86E67}.Release|x86.ActiveCfg = Release|Win32
-		{FBDAB1F6-294A-4978-A8EA-5E4479D86E67}.Release|x86.Build.0 = Release|Win32
+		{A2D765BC-B21D-46CE-AB0F-952D979DD7D6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A2D765BC-B21D-46CE-AB0F-952D979DD7D6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A2D765BC-B21D-46CE-AB0F-952D979DD7D6}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{A2D765BC-B21D-46CE-AB0F-952D979DD7D6}.Debug|x64.Build.0 = Debug|Any CPU
+		{A2D765BC-B21D-46CE-AB0F-952D979DD7D6}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{A2D765BC-B21D-46CE-AB0F-952D979DD7D6}.Debug|x86.Build.0 = Debug|Any CPU
+		{A2D765BC-B21D-46CE-AB0F-952D979DD7D6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A2D765BC-B21D-46CE-AB0F-952D979DD7D6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A2D765BC-B21D-46CE-AB0F-952D979DD7D6}.Release|x64.ActiveCfg = Release|Any CPU
+		{A2D765BC-B21D-46CE-AB0F-952D979DD7D6}.Release|x64.Build.0 = Release|Any CPU
+		{A2D765BC-B21D-46CE-AB0F-952D979DD7D6}.Release|x86.ActiveCfg = Release|Any CPU
+		{A2D765BC-B21D-46CE-AB0F-952D979DD7D6}.Release|x86.Build.0 = Release|Any CPU
+		{5D5ADC3D-160E-44B1-A1BA-C3625191EA40}.Debug|Any CPU.ActiveCfg = Debug|x64
+		{5D5ADC3D-160E-44B1-A1BA-C3625191EA40}.Debug|Any CPU.Build.0 = Debug|x64
+		{5D5ADC3D-160E-44B1-A1BA-C3625191EA40}.Debug|x64.ActiveCfg = Debug|x64
+		{5D5ADC3D-160E-44B1-A1BA-C3625191EA40}.Debug|x64.Build.0 = Debug|x64
+		{5D5ADC3D-160E-44B1-A1BA-C3625191EA40}.Debug|x86.ActiveCfg = Debug|Win32
+		{5D5ADC3D-160E-44B1-A1BA-C3625191EA40}.Debug|x86.Build.0 = Debug|Win32
+		{5D5ADC3D-160E-44B1-A1BA-C3625191EA40}.Release|Any CPU.ActiveCfg = Release|x64
+		{5D5ADC3D-160E-44B1-A1BA-C3625191EA40}.Release|Any CPU.Build.0 = Release|x64
+		{5D5ADC3D-160E-44B1-A1BA-C3625191EA40}.Release|x64.ActiveCfg = Release|x64
+		{5D5ADC3D-160E-44B1-A1BA-C3625191EA40}.Release|x64.Build.0 = Release|x64
+		{5D5ADC3D-160E-44B1-A1BA-C3625191EA40}.Release|x86.ActiveCfg = Release|Win32
+		{5D5ADC3D-160E-44B1-A1BA-C3625191EA40}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {F1437CD9-98E7-471F-B180-29A544082308}
+		SolutionGuid = {7DF3883B-E829-4E70-9D1C-AC974C67A8E1}
 	EndGlobalSection
 EndGlobal

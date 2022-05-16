@@ -53,7 +53,7 @@ namespace DendroGH {
         /// </summary>
         protected override System.Drawing.Bitmap Icon {
             get {
-                return DendroGH.Properties.Resources.ico_mesh_vox;
+                return Resources.ico_mesh_vox;
             }
         }
 

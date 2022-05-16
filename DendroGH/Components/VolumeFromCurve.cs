@@ -68,7 +68,7 @@ namespace DendroGH {
         /// </summary>
         protected override System.Drawing.Bitmap Icon {
             get {
-                return DendroGH.Properties.Resources.ico_curve_vox;
+                return Resources.ico_curve_vox;
             }
         }
 

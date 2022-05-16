@@ -75,7 +75,7 @@ namespace DendroGH {
         /// </summary>
         protected override System.Drawing.Bitmap Icon {
             get {
-                return DendroGH.Properties.Resources.ico_morph;
+                return Resources.ico_morph;
             }
         }
 
