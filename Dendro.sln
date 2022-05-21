@@ -4,6 +4,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 17.1.32421.90
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DendroGH", "DendroGH\DendroGH.csproj", "{A2D765BC-B21D-46CE-AB0F-952D979DD7D6}"
+	ProjectSection(ProjectDependencies) = postProject
+		{5D5ADC3D-160E-44B1-A1BA-C3625191EA40} = {5D5ADC3D-160E-44B1-A1BA-C3625191EA40}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DendroAPI", "DendroAPI\DendroAPI.vcxproj", "{5D5ADC3D-160E-44B1-A1BA-C3625191EA40}"
 EndProject

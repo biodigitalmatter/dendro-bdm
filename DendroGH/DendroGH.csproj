@@ -5,6 +5,11 @@
     <Title>Dendro</Title>
     <Description>Description of Dendro</Description>
     <TargetExt>.gha</TargetExt>
+    <BaseOutputPath>$(SolutionDir)bin</BaseOutputPath>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
+    <UseCommonOutputDirectory>true</UseCommonOutputDirectory>
+
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Grasshopper" Version="7.4.21078.1001" IncludeAssets="compile;build" />
@@ -24,7 +29,7 @@
   </ItemGroup>
   <PropertyGroup Condition="$([MSBuild]::IsOSPlatform(Windows))">
     <StartProgram>C:\Program Files\Rhino 7\System\Rhino.exe</StartProgram>
-    <StartArguments></StartArguments>
+    <StartArguments>/nosplash /bigdump</StartArguments>
     <StartAction>Program</StartAction>
   </PropertyGroup>
 </Project>
