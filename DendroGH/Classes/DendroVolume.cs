@@ -25,18 +25,23 @@ namespace DendroGH {
         static private extern IntPtr DendroDuplicate (IntPtr grid);
 
         [DllImport ("DendroAPI.dll", CallingConvention = CallingConvention.Cdecl)]
+        [return: MarshalAs(UnmanagedType.Bool)]
         static private extern bool DendroRead (IntPtr grid, string filename);
 
         [DllImport ("DendroAPI.dll", CallingConvention = CallingConvention.Cdecl)]
+        [return: MarshalAs(UnmanagedType.Bool)]
         static private extern bool DendroWrite (IntPtr grid, string filename);
 
         [DllImport ("DendroAPI.dll", CallingConvention = CallingConvention.Cdecl)]
+        [return: MarshalAs(UnmanagedType.Bool)]
         static private extern bool DendroFromMesh(IntPtr grid, float[] vertices, int vCount, int[] faces, int fCount, double voxelSize, double bandwidth);
 
         [DllImport ("DendroAPI.dll", CallingConvention = CallingConvention.Cdecl)]
+        [return: MarshalAs(UnmanagedType.Bool)]
         static private extern bool DendroFromPoints(IntPtr grid, double[] points, int pCount, double[] radii, int rCount, double voxelSize, double bandwidth);
 
         [DllImport ("DendroAPI.dll", CallingConvention = CallingConvention.Cdecl)]
+        [return: MarshalAs(UnmanagedType.Bool)]
         static private extern bool DendroTransform (IntPtr grid, double[] matrix, int mCount);
 
         [DllImport ("DendroAPI.dll", CallingConvention = CallingConvention.Cdecl)]
@@ -52,19 +57,19 @@ namespace DendroGH {
         static public extern void DendroOffset (IntPtr grid, double amount);
 
         [DllImport ("DendroAPI.dll", CallingConvention = CallingConvention.Cdecl)]
-        static public extern void DendroOffsetMask (IntPtr grid, double amount, IntPtr mask, double min, double max, bool invert);
+        static public extern void DendroOffsetMask (IntPtr grid, double amount, IntPtr mask, double min, double max, [MarshalAs(UnmanagedType.Bool)] bool invert);
 
         [DllImport ("DendroAPI.dll", CallingConvention = CallingConvention.Cdecl)]
         static public extern void DendroSmooth (IntPtr grid, int type, int iterations, int width);
 
         [DllImport ("DendroAPI.dll", CallingConvention = CallingConvention.Cdecl)]
-        static public extern void DendroSmoothMask (IntPtr grid, int type, int iterations, int width, IntPtr mask, double min, double max, bool invert);
+        static public extern void DendroSmoothMask (IntPtr grid, int type, int iterations, int width, IntPtr mask, double min, double max, [MarshalAs(UnmanagedType.Bool)]bool invert);
 
         [DllImport ("DendroAPI.dll", CallingConvention = CallingConvention.Cdecl)]
         static public extern void DendroBlend (IntPtr bGrid, IntPtr eGrid, double bPosition, double bEnd);
 
         [DllImport ("DendroAPI.dll", CallingConvention = CallingConvention.Cdecl)]
-        static public extern void DendroBlendMask (IntPtr bGrid, IntPtr eGrid, double bPosition, double bEnd, IntPtr mask, double min, double max, bool invert);
+        static public extern void DendroBlendMask (IntPtr bGrid, IntPtr eGrid, double bPosition, double bEnd, IntPtr mask, double min, double max, [MarshalAs(UnmanagedType.Bool)] bool invert);
 
         [DllImport("DendroAPI.dll", CallingConvention = CallingConvention.Cdecl)]
         static private extern IntPtr DendroClosestPoint(IntPtr grid, float[] vertices, int vCount, out int rSize);

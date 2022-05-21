@@ -29,19 +29,19 @@ DENDRO_API DendroGrid* DendroDuplicate(DendroGrid * grid)
 	return dup;
 }
 
-DENDRO_API bool DendroRead(DendroGrid * grid, const char * filename)
+DENDRO_API BOOL DendroRead(DendroGrid * grid, LPCSTR filename)
 {
 	return grid->Read(filename);
 }
 
-DENDRO_API bool DendroWrite(DendroGrid * grid, const char * filename)
+DENDRO_API BOOL DendroWrite(DendroGrid * grid, LPCSTR filename)
 {
 	return grid->Write(filename);
 }
 
 
 // grid conversion methods
-DENDRO_API bool DendroFromPoints(DendroGrid * grid, double *vPoints, int pCount, double *vRadius, int rCount, double voxelSize, double bandwidth)
+DENDRO_API BOOL DendroFromPoints(DendroGrid * grid, double *vPoints, int pCount, double *vRadius, int rCount, double voxelSize, double bandwidth)
 {
 	double inverseVoxelSize = 1.0 / voxelSize;
 
@@ -93,7 +93,7 @@ DENDRO_API bool DendroFromPoints(DendroGrid * grid, double *vPoints, int pCount,
 
 }
 
-DENDRO_API bool DendroFromMesh(DendroGrid * grid, float* vPoints, int vCount, int * vFaces, int fCount, double voxelSize, double bandwidth)
+DENDRO_API BOOL DendroFromMesh(DendroGrid * grid, float* vPoints, int vCount, int * vFaces, int fCount, double voxelSize, double bandwidth)
 {
 	double inverseVoxelSize = 1.0 / voxelSize;
 
@@ -156,7 +156,7 @@ DENDRO_API int * DendroFaceBuffer(DendroGrid * grid, int * size)
 
 
 // grid transformation methods
-DENDRO_API bool DendroTransform(DendroGrid *grid, double *matrix, int mCount)
+DENDRO_API BOOL DendroTransform(DendroGrid *grid, double *matrix, int mCount)
 {
 	if (mCount != 16) {
 		return false;
@@ -196,9 +196,9 @@ DENDRO_API void DendroOffset(DendroGrid * grid, double amount)
 	grid->Offset(amount);
 }
 
-DENDRO_API void DendroOffsetMask(DendroGrid * grid, double amount, DendroGrid * mask, double min, double max, bool invert)
+DENDRO_API void DendroOffsetMask(DendroGrid * grid, double amount, DendroGrid * mask, double min, double max, BOOL invert)
 {
-	grid->Offset(amount, *mask, min, max, invert);
+	grid->Offset(amount, *mask, min, max, (bool)invert);
 }
 
 DENDRO_API void DendroSmooth(DendroGrid * grid, int type, int iterations, int width)
@@ -206,9 +206,9 @@ DENDRO_API void DendroSmooth(DendroGrid * grid, int type, int iterations, int wi
 	grid->Smooth(type, iterations, width);
 }
 
-DENDRO_API void DendroSmoothMask(DendroGrid * grid, int type, int iterations, int width, DendroGrid * mask, double min, double max, bool invert)
+DENDRO_API void DendroSmoothMask(DendroGrid * grid, int type, int iterations, int width, DendroGrid * mask, double min, double max, BOOL invert)
 {
-	grid->Smooth(type, iterations, width, *mask, min, max, invert);
+	grid->Smooth(type, iterations, width, *mask, min, max, (bool)invert);
 }
 
 DENDRO_API void DendroBlend(DendroGrid * bGrid, DendroGrid * eGrid, double bPosition, double bEnd)
@@ -216,9 +216,9 @@ DENDRO_API void DendroBlend(DendroGrid * bGrid, DendroGrid * eGrid, double bPosi
 	bGrid->Blend(*eGrid, bPosition, bEnd);
 }
 
-DENDRO_API void DendroBlendMask(DendroGrid * bGrid, DendroGrid * eGrid, double bPosition, double bEnd, DendroGrid * mask, double min, double max, bool invert)
+DENDRO_API void DendroBlendMask(DendroGrid * bGrid, DendroGrid * eGrid, double bPosition, double bEnd, DendroGrid * mask, double min, double max, BOOL invert)
 {
-	bGrid->Blend(*eGrid, bPosition, bEnd, *mask, min, max, invert);
+	bGrid->Blend(*eGrid, bPosition, bEnd, *mask, min, max, (bool)invert);
 }
 
 // volume utilities
