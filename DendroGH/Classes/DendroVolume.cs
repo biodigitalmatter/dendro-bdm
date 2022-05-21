@@ -871,11 +871,11 @@ namespace DendroGH {
 
             // pinvoke vertex buffer
             vertices = DendroVertexBuffer (this.Grid, out int size);
-            if (vertices != IntPtr.Zero) {
-                result = new float[size];
-                Marshal.Copy (vertices, result, 0, size);
-            }
+            if (vertices == IntPtr.Zero || size < 1)
+                throw new Exception("Invalid return value from DendroVertexBuffer");
 
+            result = new float[size];
+            Marshal.Copy (vertices, result, 0, size);
             Marshal.FreeHGlobal (vertices);
 
             return result;
@@ -892,11 +892,11 @@ namespace DendroGH {
 
             // pinvoke face buffer
             faces = DendroFaceBuffer (this.Grid, out int size);
-            if (faces != IntPtr.Zero) {
-                result = new int[size];
-                Marshal.Copy (faces, result, 0, size);
-            }
-
+            if (faces == IntPtr.Zero || size < 1)
+                throw new Exception("Invalid return value from DendroFaceBuffer");
+            
+            result = new int[size];
+            Marshal.Copy (faces, result, 0, size);
             Marshal.FreeHGlobal (faces);
 
             return result;
