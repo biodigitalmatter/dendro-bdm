@@ -12,25 +12,31 @@ The goal was to make Dendro integrate into Grasshopper-3D as seamlessly as possi
 Dendro contains two projects, a C++ project for working with OpenVDB and a C# project creating the Grasshopper-3D plugin.
 
 ##### DendroAPI (C++)
-Dendro has multiple dependencies...
 
-* blosc
-* boost
-* openexr
-* openvdb
-* tbb
-* zlib
-
-To make working with the library easier, we've included a file named "dendro_libs.7z". It includes all the libraries needed to run and compile DendroAPI. Just extract the 7z into the main solution directory and when you open the solution, all libraries will link to that directory automatically. Unless you want to work with different versions of these dependencies, you shouldn't need to do anything to get up and running.
+C++ dependencies are installed using vcpkg on build, see [Get started with vcpkg](https://vcpkg.io/en/getting-started.html). The project are using a manifest file to list dependencies.
 
 ##### DendroGH (C#)
 Since there are multiple versions of Rhino, each with their specific SDK, we added the Rhinocommon and Grasshopper-3D libraries as a nuget package in order to let you specifically target your desired Rhino version. That can be changed by `Right-clicking the C# project`, then selecting `Manage Nuget Packages`, clicking the `Installed` tab, `Selecting` your desired package, and finally, changing the `Version` in the right panel.
 
-It is targeted for Rhino 5 by default because that seems to be more universal and forward compatible in Rhino 6.
+## Developing
 
-## Building
+Dendro is built using Microsoft Visual Studio 2022, but you should be able to re-target for other versions.
 
-Dendro was built using Microsoft Visual Studio 2019, but you should be able to re-target for other versions. It will also copy all necessary dependency dlls into the output folder to provide an easy reference for where dependency dlls can be found.
+Add the folder `bin\Debug` (or `bin\Release`) to library paths for Grasshopper using `GrasshopperDeveloperSettings`.
+
+### Formatting
+
+C++ code should be formatted using clang-formatter (included in Visual Studio). The `Microsoft` style was selected as it seemed to be closest to existing code style. clang-formatter settings can be found in `.clang-format`
+
+C# code is formatted according to the `.editorconfig` file.
+
+### Git config
+
+Add the following setting to ignore formatting commit(s) when using `git blame`.
+
+```
+git config blame.ignoreRevsFile .git-blame-ignore-revs
+```
 
 ## More Info
 
