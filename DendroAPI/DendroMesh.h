@@ -6,31 +6,31 @@
 #include <openvdb/openvdb.h>
 #include <vector>
 
-class DendroMesh {
+class DendroMesh
+{
 
-public:
+  public:
+    DendroMesh();
+    ~DendroMesh();
 
-	DendroMesh();
-	~DendroMesh();
+    DendroMesh Duplicate();
 
-	DendroMesh Duplicate();
+    bool IsValid();
 
-	bool IsValid();
+    std::vector<openvdb::Vec3s> Vertices();
+    std::vector<openvdb::Vec4I> Faces();
 
-	std::vector<openvdb::Vec3s> Vertices();
-	std::vector<openvdb::Vec4I> Faces();
+    void AddVertice(openvdb::Vec3s v);
+    void AddVertice(std::vector<openvdb::Vec3s> v);
 
-	void AddVertice(openvdb::Vec3s v);
-	void AddVertice(std::vector<openvdb::Vec3s> v);
+    void AddFace(openvdb::Vec4I f);
+    void AddFace(std::vector<openvdb::Vec4I> f);
 
-	void AddFace(openvdb::Vec4I f);
-	void AddFace(std::vector<openvdb::Vec4I> f);
+    void Clear();
 
-	void Clear();
-
-private:
-	std::vector<openvdb::Vec3s> mVertices;
-	std::vector<openvdb::Vec4I> mFaces;
+  private:
+    std::vector<openvdb::Vec3s> mVertices;
+    std::vector<openvdb::Vec4I> mFaces;
 };
 
 #endif // __DENDROMESH_H__

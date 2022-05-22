@@ -1,48 +1,49 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Grasshopper;
-using Grasshopper.Kernel;
-using Grasshopper.Kernel.Types;
+﻿using Grasshopper.Kernel.Types;
 
-namespace DendroGH {
+namespace DendroGH
+{
     /// <summary>
     /// goo implementation for DendroSettings data types
     /// </summary>
     /// <typeparam name="DendroMask">settings object</typeparam>
-    public class SettingsGOO : GH_Goo<DendroSettings> {
-#region Constructors
+    public class SettingsGOO : GH_Goo<DendroSettings>
+    {
+        #region Constructors
         /// <summary>
         /// default constructor
         /// </summary>
-        public SettingsGOO () {
-            this.Value = new DendroSettings ();
+        public SettingsGOO()
+        {
+            this.Value = new DendroSettings();
         }
 
         /// <summary>
         /// copy constructor
         /// </summary>
         /// <param name="ds">settings to copy from</param>
-        public SettingsGOO (DendroSettings ds) {
-            if (ds == null) {
-                ds = new DendroSettings ();
+        public SettingsGOO(DendroSettings ds)
+        {
+            if (ds == null)
+            {
+                ds = new DendroSettings();
             }
-            this.Value = new DendroSettings (ds);
+            this.Value = new DendroSettings(ds);
         }
 
         /// <summary>
         /// make a complete duplicate of this instance
         /// </summary>
         /// <returns>duplicated SettingsGOO</returns>
-        public SettingsGOO DuplicateGoo () {
-            if (this.Value == null) {
-                return new SettingsGOO ();
+        public SettingsGOO DuplicateGoo()
+        {
+            if (this.Value == null)
+            {
+                return new SettingsGOO();
             }
-            else {
-                DendroSettings ds = new DendroSettings (this.Value);
-                return new SettingsGOO (ds);
+            else
+            {
+                DendroSettings ds = new DendroSettings(this.Value);
+                return new SettingsGOO(ds);
             }
         }
 
@@ -50,19 +51,22 @@ namespace DendroGH {
         /// make a complete duplicate of this instance
         /// </summary>
         /// <returns>duplicated SettingsGOO</returns>
-        public override IGH_Goo Duplicate () {
-            return DuplicateGoo ();
+        public override IGH_Goo Duplicate()
+        {
+            return DuplicateGoo();
         }
-#endregion
+        #endregion
 
-#region Properties
+        #region Properties
 
         /// <summary>
         /// gets a value indicating whether or not the current value is valid
         /// </summary>
         /// <returns>property value</returns>
-        public override bool IsValid {
-            get {
+        public override bool IsValid
+        {
+            get
+            {
                 return true;
             }
         }
@@ -71,8 +75,10 @@ namespace DendroGH {
         /// gets a string describing the state of "invalidness". if the instance is valid, then this property should return Nothing or String.Empty
         /// </summary>
         /// <returns>property value</returns>
-        public override string IsValidWhyNot {
-            get {
+        public override string IsValidWhyNot
+        {
+            get
+            {
                 return base.IsValidWhyNot;
             }
         }
@@ -81,7 +87,8 @@ namespace DendroGH {
         /// creates a string description of the current instance value
         /// </summary>
         /// <returns>property value</returns>
-        public override string ToString () {
+        public override string ToString()
+        {
             if (m_value == null)
                 return "Null Dendro Settings";
             else return "Dendro Settings";
@@ -91,7 +98,8 @@ namespace DendroGH {
         /// gets a description of the type of the implementation
         /// </summary>
         /// <returns>property value</returns>
-        public override string TypeDescription {
+        public override string TypeDescription
+        {
             get { return ("Dendro Settings container"); }
         }
 
@@ -99,17 +107,19 @@ namespace DendroGH {
         /// gets the name of the type of the implementation
         /// </summary>
         /// <returns>property value</returns>
-        public override string TypeName {
+        public override string TypeName
+        {
             get { return "Dendro Settings"; }
         }
-#endregion
+        #endregion
 
-#region Casting
+        #region Casting
         /// <summary>
         /// this function will be called when the local IGH_Goo instance disappears into a user script
         /// </summary>
         /// <returns>returns the DendroMask instance</returns>
-        public override object ScriptVariable () {
+        public override object ScriptVariable()
+        {
             return Value;
         }
 
@@ -138,10 +148,11 @@ namespace DendroGH {
         /// </summary>
         /// <param name="source">reference to source of cast</param>
         /// <returns>true on success, false on failure</returns>
-        public override bool CastFrom (object source) {
+        public override bool CastFrom(object source)
+        {
             return false;
         }
-#endregion
+        #endregion
 
     }
 }

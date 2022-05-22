@@ -12,6 +12,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DendroAPI", "DendroAPI\Dend
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{FD62CB38-8E5A-4D43-9C5B-861A86982E05}"
 	ProjectSection(SolutionItems) = preProject
+		.clang-format = .clang-format
+		.editorconfig = .editorconfig
 		vcpkg.json = vcpkg.json
 		vcpkg\triplets\x64-windows-mixed.cmake = vcpkg\triplets\x64-windows-mixed.cmake
 	EndProjectSection

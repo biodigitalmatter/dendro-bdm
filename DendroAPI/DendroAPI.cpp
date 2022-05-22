@@ -1,255 +1,257 @@
 // DendroAPI.cpp : Defines the exported functions for the DLL application.
 //
-#include "pch.h"
 #include "DendroAPI.h"
+#include "pch.h"
 
-#include"DendroParticle.h"
-#include"DendroMesh.h"
+#include "DendroMesh.h"
+#include "DendroParticle.h"
 #include <openvdb/util/Util.h>
 #include <vector>
 
 // grid class constructors
-DENDRO_API DendroGrid* DendroCreate()
+DENDRO_API DendroGrid *DendroCreate()
 {
-	DendroGrid *grid = new DendroGrid();
-	return grid;
+    DendroGrid *grid = new DendroGrid();
+    return grid;
 }
 
-DENDRO_API void DendroDelete(DendroGrid * grid)
+DENDRO_API void DendroDelete(DendroGrid *grid)
 {
-	if (grid != NULL) {
-		delete grid;
-		grid = NULL;
-	}
+    if (grid != NULL)
+    {
+        delete grid;
+        grid = NULL;
+    }
 }
 
-DENDRO_API DendroGrid* DendroDuplicate(DendroGrid * grid)
+DENDRO_API DendroGrid *DendroDuplicate(DendroGrid *grid)
 {
-	DendroGrid *dup = new DendroGrid(grid);
-	return dup;
+    DendroGrid *dup = new DendroGrid(grid);
+    return dup;
 }
 
-DENDRO_API BOOL DendroRead(DendroGrid * grid, LPCSTR filename)
+DENDRO_API BOOL DendroRead(DendroGrid *grid, LPCSTR filename)
 {
-	return grid->Read(filename);
+    return grid->Read(filename);
 }
 
-DENDRO_API BOOL DendroWrite(DendroGrid * grid, LPCSTR filename)
+DENDRO_API BOOL DendroWrite(DendroGrid *grid, LPCSTR filename)
 {
-	return grid->Write(filename);
+    return grid->Write(filename);
 }
-
 
 // grid conversion methods
-DENDRO_API BOOL DendroFromPoints(DendroGrid * grid, double *vPoints, int pCount, double *vRadius, int rCount, double voxelSize, double bandwidth)
+DENDRO_API BOOL DendroFromPoints(DendroGrid *grid, double *vPoints, int pCount, double *vRadius, int rCount,
+                                 double voxelSize, double bandwidth)
 {
-	double inverseVoxelSize = 1.0 / voxelSize;
+    double inverseVoxelSize = 1.0 / voxelSize;
 
-	std::vector<openvdb::Vec3R> particleList;
+    std::vector<openvdb::Vec3R> particleList;
 
-	int i = 0;
-	while (i < pCount)
-	{
-		double x = vPoints[i]; // *inverseVoxelSize;
-		double y = vPoints[i + 1]; // * inverseVoxelSize;
-		double z = vPoints[i + 2]; // * inverseVoxelSize;
+    int i = 0;
+    while (i < pCount)
+    {
+        double x = vPoints[i];     // *inverseVoxelSize;
+        double y = vPoints[i + 1]; // * inverseVoxelSize;
+        double z = vPoints[i + 2]; // * inverseVoxelSize;
 
-		particleList.push_back(openvdb::Vec3R(x, y, z));
+        particleList.push_back(openvdb::Vec3R(x, y, z));
 
-		i += 3;
-	}
+        i += 3;
+    }
 
-	DendroParticle ps;
-	ps.clear();
+    DendroParticle ps;
+    ps.clear();
 
-	if (particleList.size() == rCount)
-	{
+    if (particleList.size() == rCount)
+    {
 
-		int i = 0;
-		for (auto it = particleList.begin(); it != particleList.end(); ++it)
-		{
-			ps.add((*it), openvdb::Real(vRadius[i]));
-			i++;
-		}
-	}
-	else
-	{
+        int i = 0;
+        for (auto it = particleList.begin(); it != particleList.end(); ++it)
+        {
+            ps.add((*it), openvdb::Real(vRadius[i]));
+            i++;
+        }
+    }
+    else
+    {
 
-		double average = 0.0;
-		for (int i = 0; i < rCount; i++)
-		{
-			average += vRadius[i];
-		}
-		average /= rCount;
-		openvdb::Real radius = openvdb::Real(average);
+        double average = 0.0;
+        for (int i = 0; i < rCount; i++)
+        {
+            average += vRadius[i];
+        }
+        average /= rCount;
+        openvdb::Real radius = openvdb::Real(average);
 
-		for (auto it = particleList.begin(); it != particleList.end(); ++it)
-		{
-			ps.add((*it), radius);
-		}
-	}
+        for (auto it = particleList.begin(); it != particleList.end(); ++it)
+        {
+            ps.add((*it), radius);
+        }
+    }
 
-	return grid->CreateFromPoints(ps, voxelSize, bandwidth);
-
+    return grid->CreateFromPoints(ps, voxelSize, bandwidth);
 }
 
-DENDRO_API BOOL DendroFromMesh(DendroGrid * grid, float* vPoints, int vCount, int * vFaces, int fCount, double voxelSize, double bandwidth)
+DENDRO_API BOOL DendroFromMesh(DendroGrid *grid, float *vPoints, int vCount, int *vFaces, int fCount, double voxelSize,
+                               double bandwidth)
 {
-	double inverseVoxelSize = 1.0 / voxelSize;
+    double inverseVoxelSize = 1.0 / voxelSize;
 
-	DendroMesh vMesh;
-	vMesh.Clear();
+    DendroMesh vMesh;
+    vMesh.Clear();
 
-	int i = 0;
-	while (i < vCount) {
+    int i = 0;
+    while (i < vCount)
+    {
 
-		openvdb::Vec3s vertex(vPoints[i], vPoints[i + 1], vPoints[i + 2]);
+        openvdb::Vec3s vertex(vPoints[i], vPoints[i + 1], vPoints[i + 2]);
 
-		vertex *= inverseVoxelSize;
+        vertex *= inverseVoxelSize;
 
-		vMesh.AddVertice(vertex);
+        vMesh.AddVertice(vertex);
 
-		i += 3;
-	}
+        i += 3;
+    }
 
-	i = 0;
-	while (i<fCount) {
-		openvdb::Vec4I face(vFaces[i], vFaces[i + 1], vFaces[i + 2], openvdb::util::INVALID_IDX);
+    i = 0;
+    while (i < fCount)
+    {
+        openvdb::Vec4I face(vFaces[i], vFaces[i + 1], vFaces[i + 2], openvdb::util::INVALID_IDX);
 
-		vMesh.AddFace(face);
-		i += 3;
-	}
+        vMesh.AddFace(face);
+        i += 3;
+    }
 
-	return grid->CreateFromMesh(vMesh, voxelSize, bandwidth);
-
+    return grid->CreateFromMesh(vMesh, voxelSize, bandwidth);
 }
-
 
 // grid render methods
-DENDRO_API void DendroToMesh(DendroGrid * grid)
+DENDRO_API void DendroToMesh(DendroGrid *grid)
 {
-	grid->UpdateDisplay();
+    grid->UpdateDisplay();
 }
 
-DENDRO_API void DendroToMeshSettings(DendroGrid * grid, double isovalue, double adaptivity)
+DENDRO_API void DendroToMeshSettings(DendroGrid *grid, double isovalue, double adaptivity)
 {
-	grid->UpdateDisplay(isovalue, adaptivity);
+    grid->UpdateDisplay(isovalue, adaptivity);
 }
 
-DENDRO_API float* DendroVertexBuffer(DendroGrid * grid, int * size)
+DENDRO_API float *DendroVertexBuffer(DendroGrid *grid, int *size)
 {
-	float *verticeArray = grid->GetMeshVertices();
+    float *verticeArray = grid->GetMeshVertices();
 
-	*size = grid->GetVertexCount();
+    *size = grid->GetVertexCount();
 
-	return verticeArray;
+    return verticeArray;
 }
 
-DENDRO_API int * DendroFaceBuffer(DendroGrid * grid, int * size)
+DENDRO_API int *DendroFaceBuffer(DendroGrid *grid, int *size)
 {
-	int *faceArray = grid->GetMeshFaces();
+    int *faceArray = grid->GetMeshFaces();
 
-	*size = grid->GetFaceCount();
+    *size = grid->GetFaceCount();
 
-	return faceArray;
+    return faceArray;
 }
-
 
 // grid transformation methods
 DENDRO_API BOOL DendroTransform(DendroGrid *grid, double *matrix, int mCount)
 {
-	if (mCount != 16) {
-		return false;
-	}
+    if (mCount != 16)
+    {
+        return false;
+    }
 
-	openvdb::math::Mat4d xform = openvdb::math::Mat4d(matrix[0], matrix[1], matrix[2], matrix[3],
-		matrix[4], matrix[5], matrix[6], matrix[7],
-		matrix[8], matrix[9], matrix[10], matrix[11],
-		matrix[12], matrix[13], matrix[14], matrix[15]);
+    openvdb::math::Mat4d xform = openvdb::math::Mat4d(matrix[0], matrix[1], matrix[2], matrix[3], matrix[4], matrix[5],
+                                                      matrix[6], matrix[7], matrix[8], matrix[9], matrix[10],
+                                                      matrix[11], matrix[12], matrix[13], matrix[14], matrix[15]);
 
-	grid->Transform(xform);
+    grid->Transform(xform);
 
-	return true;
+    return true;
 }
-
 
 // grid csg methods
-DENDRO_API void DendroUnion(DendroGrid * grid, DendroGrid * csgGrid)
+DENDRO_API void DendroUnion(DendroGrid *grid, DendroGrid *csgGrid)
 {
-	grid->BooleanUnion(*csgGrid);
+    grid->BooleanUnion(*csgGrid);
 }
 
-DENDRO_API void DendroDifference(DendroGrid * grid, DendroGrid * csgGrid)
+DENDRO_API void DendroDifference(DendroGrid *grid, DendroGrid *csgGrid)
 {
-	grid->BooleanDifference(*csgGrid);
+    grid->BooleanDifference(*csgGrid);
 }
 
-DENDRO_API void DendroIntersection(DendroGrid * grid, DendroGrid * csgGrid)
+DENDRO_API void DendroIntersection(DendroGrid *grid, DendroGrid *csgGrid)
 {
-	grid->BooleanIntersection(*csgGrid);
+    grid->BooleanIntersection(*csgGrid);
 }
-
 
 // grid filter methods
-DENDRO_API void DendroOffset(DendroGrid * grid, double amount)
+DENDRO_API void DendroOffset(DendroGrid *grid, double amount)
 {
-	grid->Offset(amount);
+    grid->Offset(amount);
 }
 
-DENDRO_API void DendroOffsetMask(DendroGrid * grid, double amount, DendroGrid * mask, double min, double max, BOOL invert)
+DENDRO_API void DendroOffsetMask(DendroGrid *grid, double amount, DendroGrid *mask, double min, double max, BOOL invert)
 {
-	grid->Offset(amount, *mask, min, max, (bool)invert);
+    grid->Offset(amount, *mask, min, max, (bool)invert);
 }
 
-DENDRO_API void DendroSmooth(DendroGrid * grid, int type, int iterations, int width)
+DENDRO_API void DendroSmooth(DendroGrid *grid, int type, int iterations, int width)
 {
-	grid->Smooth(type, iterations, width);
+    grid->Smooth(type, iterations, width);
 }
 
-DENDRO_API void DendroSmoothMask(DendroGrid * grid, int type, int iterations, int width, DendroGrid * mask, double min, double max, BOOL invert)
+DENDRO_API void DendroSmoothMask(DendroGrid *grid, int type, int iterations, int width, DendroGrid *mask, double min,
+                                 double max, BOOL invert)
 {
-	grid->Smooth(type, iterations, width, *mask, min, max, (bool)invert);
+    grid->Smooth(type, iterations, width, *mask, min, max, (bool)invert);
 }
 
-DENDRO_API void DendroBlend(DendroGrid * bGrid, DendroGrid * eGrid, double bPosition, double bEnd)
+DENDRO_API void DendroBlend(DendroGrid *bGrid, DendroGrid *eGrid, double bPosition, double bEnd)
 {
-	bGrid->Blend(*eGrid, bPosition, bEnd);
+    bGrid->Blend(*eGrid, bPosition, bEnd);
 }
 
-DENDRO_API void DendroBlendMask(DendroGrid * bGrid, DendroGrid * eGrid, double bPosition, double bEnd, DendroGrid * mask, double min, double max, BOOL invert)
+DENDRO_API void DendroBlendMask(DendroGrid *bGrid, DendroGrid *eGrid, double bPosition, double bEnd, DendroGrid *mask,
+                                double min, double max, BOOL invert)
 {
-	bGrid->Blend(*eGrid, bPosition, bEnd, *mask, min, max, (bool)invert);
+    bGrid->Blend(*eGrid, bPosition, bEnd, *mask, min, max, (bool)invert);
 }
 
 // volume utilities
-DENDRO_API float* DendroClosestPoint(DendroGrid* grid, float* vPoints, int vCount, int* rSize)
+DENDRO_API float *DendroClosestPoint(DendroGrid *grid, float *vPoints, int vCount, int *rSize)
 {
-	std::vector<openvdb::Vec3R> points;
-	std::vector<float> distances;
+    std::vector<openvdb::Vec3R> points;
+    std::vector<float> distances;
 
-	int i = 0;
-	while (i < vCount) {
+    int i = 0;
+    while (i < vCount)
+    {
 
-		openvdb::Vec3R vertex(vPoints[i], vPoints[i + 1], vPoints[i + 2]);
+        openvdb::Vec3R vertex(vPoints[i], vPoints[i + 1], vPoints[i + 2]);
 
-		points.push_back(vertex);
+        points.push_back(vertex);
 
-		i += 3;
-	}
+        i += 3;
+    }
 
-	grid->ClosestPoint(points, distances);
+    grid->ClosestPoint(points, distances);
 
-	*rSize = points.size() * 3;
+    *rSize = points.size() * 3;
 
-	float* pArray = reinterpret_cast<float*>(malloc(*rSize * sizeof(float)));
+    float *pArray = reinterpret_cast<float *>(malloc(*rSize * sizeof(float)));
 
-	i = 0;
-	for (auto it = points.begin(); it != points.end(); ++it) {
-		pArray[i] = it->x();
-		pArray[i + 1] = it->y();
-		pArray[i + 2] = it->z();
-		i += 3;
-	}
+    i = 0;
+    for (auto it = points.begin(); it != points.end(); ++it)
+    {
+        pArray[i] = it->x();
+        pArray[i + 1] = it->y();
+        pArray[i + 2] = it->z();
+        i += 3;
+    }
 
-	return pArray;
+    return pArray;
 }
