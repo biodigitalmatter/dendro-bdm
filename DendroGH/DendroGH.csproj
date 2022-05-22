@@ -12,6 +12,11 @@
 
   </PropertyGroup>
   <ItemGroup>
+    <Compile Remove="bin\**" />
+    <EmbeddedResource Remove="bin\**" />
+    <None Remove="bin\**" />
+  </ItemGroup>
+  <ItemGroup>
     <PackageReference Include="Grasshopper" Version="7.4.21078.1001" IncludeAssets="compile;build" />
   </ItemGroup>
   <ItemGroup>

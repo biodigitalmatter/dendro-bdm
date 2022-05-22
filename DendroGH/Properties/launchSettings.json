@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "DendroGH": {
+      "commandName": "Project",
+      "nativeDebugging": true
+    }
+  }
+}
